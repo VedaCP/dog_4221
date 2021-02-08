@@ -52,6 +52,7 @@ class FirstFragment : Fragment() {
             it?.let {
                 val bundle = Bundle()
                 bundle.putString("status", it.breed)
+                viewModel.getFetchBreedWhitCoroutines(it.breed)
                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
             }
         })

@@ -27,7 +27,11 @@ class DogViewModel(application: Application): AndroidViewModel(application) {
     fun getFetchDogWhitCoroutines() = viewModelScope.launch {
         repository.getDogWhitCoroutines()
     }
+    fun getFetchBreedWhitCoroutines(id: String) = viewModelScope.launch {
+        repository.imageDog(id)
+    }
     fun getDogById(id: String): LiveData<List<ImagesBreed>> {
+      //  getFetchBreedWhitCoroutines(id)
         return repository.getDogById(id)
 
     }

@@ -19,7 +19,8 @@ class DogRepository(private val dao: DogDao) {
         return listBreedEntity
     }
 
-    fun imagesBreed(listImage: List<String>, breed:String) : List<ImagesBreed> {
+    fun imagesBreed(listImage: List<String>, breed:String
+    ) : List<ImagesBreed> {
         val listImagesBreed : MutableList<ImagesBreed> = mutableListOf()
 
         listImage.map {
@@ -44,6 +45,21 @@ class DogRepository(private val dao: DogDao) {
         }
 
         catch(t: Throwable) {
+            Log.e("ERROR COROUTINA", t.message.toString())
+        }
+    }
+    suspend fun imageDog(id: String) {
+        try {
+            val response = RetrofitDogCliente.retrofitInstance().fetchImagesByBreed(id)
+            when (response.isSuccessful){
+                true -> response.body()?.let{
+                    Log.d("repo", "${it}")
+                    dao.insertImageDog(imagesBreed(it.message, id))
+                }
+                false -> Log.d("ERROR", "${response.code()} : ${response.errorBody()}")
+            }
+        }
+        catch (t: Throwable) {
             Log.e("ERROR COROUTINA", t.message.toString())
         }
     }

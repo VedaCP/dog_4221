@@ -20,7 +20,7 @@ interface DogDao {
         @Query("SELECT * FROM breed_table")
         fun getAllDogDaoDB(): LiveData<List<BreedEntity>>
 
-        @Query("SELECT * FROM image_table WHERE imgURL = :id")
+        @Query("SELECT * FROM image_table WHERE status = :id")
         fun getDogById(id: String) : LiveData<List<ImagesBreed>>
 
     }
