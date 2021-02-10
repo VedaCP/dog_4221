@@ -8,8 +8,10 @@ import com.example.dog_4221.model.local.ImagesBreed
 
 class DogRepository(private val dao: DogDao) {
 
-    private val services = RetrofitDogCliente.retrofitInstance()
-    val LiveDataDogDaoDB: LiveData<List<BreedEntity>> = dao.getAllDogDaoDB()
+    //private val services = RetrofitDogCliente.retrofitInstance()
+    val listBreed: LiveData<List<BreedEntity>> = dao.getAllDogDaoDB()
+
+    val listFavImages = dao.getAllFavImages() //All fav imagen
 
     fun listado(listado: List<String>) : List<BreedEntity> {
         val listBreedEntity = mutableListOf<BreedEntity>()
@@ -24,7 +26,7 @@ class DogRepository(private val dao: DogDao) {
         val listImagesBreed : MutableList<ImagesBreed> = mutableListOf()
 
         listImage.map {
-            listImagesBreed.add(ImagesBreed(imgURL = it, status = breed))
+            listImagesBreed.add(ImagesBreed(imgURL = it, status = breed, fav = false))
         }
         return listImagesBreed
     }
@@ -68,4 +70,8 @@ class DogRepository(private val dao: DogDao) {
    fun getDogById(id: String) : LiveData<List<ImagesBreed>> {
          return dao.getDogById(id)
      }
+    suspend fun updateFavImages(imagesBreed: ImagesBreed){ //Esto va a ser el update de fav
+       dao.updateImageBreed(imagesBreed)
+    }
+
 }

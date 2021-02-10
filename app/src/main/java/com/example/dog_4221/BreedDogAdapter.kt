@@ -46,6 +46,4 @@ class BreedDogAdapter : RecyclerView.Adapter<BreedDogAdapter.BreedVH>() {
 
 }
 
-private fun <TranscodeType> RequestBuilder<TranscodeType>.into(tvBreed: TextView) {
 
-}

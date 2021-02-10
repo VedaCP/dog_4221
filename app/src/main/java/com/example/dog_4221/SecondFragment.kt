@@ -6,17 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.example.dog_4221.databinding.FragmentFirstBinding
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dog_4221.databinding.FragmentSecondBinding
-import com.example.dog_4221.model.DogViewModel
-import java.util.*
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -50,12 +43,26 @@ class SecondFragment : Fragment() {
 
         var adapter = ImageAdapter()
         binding.ivImage.adapter = adapter
-        binding.ivImage.layoutManager = LinearLayoutManager(context)
+        binding.ivImage.layoutManager = GridLayoutManager(context, 2)
         viewModel.getDogById(idImages).observe(viewLifecycleOwner,
             androidx.lifecycle.Observer {
             it?.let {
                 Log.d("segundo fragmento", "$it")
                 adapter.update(it)
+            }
+        })
+
+        adapter.selectedItem().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            it?.let {
+                if (it.fav) {
+                   it.fav = false
+                   viewModel.updateFavImages(it)
+                   Toast.makeText(context, "Eliminado de fav", Toast.LENGTH_LONG).show()
+                } else {
+                it.fav = true
+                viewModel.updateFavImages(it)
+                Toast.makeText(context, "Añadido a fav", Toast.LENGTH_LONG).show()
+            }
             }
         })
 

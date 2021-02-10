@@ -5,4 +5,4 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "image_table")
-data class ImagesBreed(@PrimaryKey val imgURL: String, val status: String)
+data class ImagesBreed(@PrimaryKey val imgURL: String, val status: String, var fav: Boolean)
